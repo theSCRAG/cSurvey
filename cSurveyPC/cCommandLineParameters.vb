@@ -129,22 +129,26 @@ Public Class cCommandLineParameters
         Next
 
         For Each sParam As String In sRes.Split(sSeparator)
-            Dim p As Integer = sParam.IndexOf("=")
-            Dim sKey As String
-            Dim sValue As String
-            If p < 0 Then
-                'a bare parameter is the file to open (a double-clicked .csx/.csz arrives
-                'so): pass it as filename=, whose value keeps its case - keys are
-                'lowercased, and on a case-sensitive file system (e.g. a Google Drive for
-                'desktop shared folder) the lowercased path does not exist
-                sKey = "filename"
-                sValue = sParam
-            Else
-                sKey = sParam.Substring(0, p)
-                sValue = sParam.Substring(p + 1)
+            sParam = sParam.Trim
+            If sParam <> "" Then
+                Dim p As Integer = sParam.IndexOf("=")
+                Dim sKey As String
+                Dim sValue As String
+                If p < 0 Then
+                    'a bare parameter is the file to open (a double-clicked .csx/.csz arrives
+                    'so): pass it as filename=, whose value keeps its case - keys are
+                    'lowercased, and on a case-sensitive file system (e.g. a Google Drive for
+                    'desktop shared folder) the lowercased path does not exist
+
+                    sKey = "filename"
+                    sValue = sParam
+                Else
+                    sKey = sParam.Substring(0, p)
+                    sValue = sParam.Substring(p + 1)
+                End If
+                sKey = sKey.ToLower
+                Call Add(sKey, sValue)
             End If
-            sKey = sKey.ToLower
-            Call Add(sKey, sValue)
         Next
     End Sub
 

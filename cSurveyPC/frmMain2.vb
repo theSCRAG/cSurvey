@@ -2432,12 +2432,6 @@ Friend Class frmMain2
         End Select
     End Sub
 
-    'Private Sub pUndoManager()
-    '    If Not frmU.Visible Then
-    '        Call frmU.Show(Me)
-    '    End If
-    'End Sub
-
     Private WithEvents oDockConsole As cDockConsole
 
     Private WithEvents oDockScript As cDockScript
@@ -2462,10 +2456,10 @@ Friend Class frmMain2
         If Not bIsInDebug Then modDevExpress.PrepareSkinMenu(SkinDropDownButtonItem1.DropDownGallery.Gallery)
 
         Call pSurveyNew()
-
         'if there are command in commandline
         If oCommandLine.Count > 0 Then
             'if there is ONE command will check if is only a key (not in format key=value) so this is a filename
+            'NOTE: with commit c734e79d this block is not useful cause with filename only the commandline in populate with one keyvalue with key="filename"
             If oCommandLine.Count = 1 AndAlso oCommandLine(0).Key <> "" AndAlso oCommandLine(0).Value = "" Then
                 Call pSurveyLoad(oCommandLine(0).Key, False)
             Else
